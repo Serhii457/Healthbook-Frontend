@@ -1,0 +1,36 @@
+.about-page h1 {
+  font-size: 2.5rem;
+}
+
+.about-page h4 {
+  font-weight: 600;
+}
+
+.about-page p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+
+.about-page h4 {
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 0.95rem;
+}
+
+
+
+
+.about-full-banner {
+  min-height: 100vh;
+  background: url('/images/about/inf-bg.jpg') center/cover no-repeat;
+  position: relative;
+  color: white;
+}
+
+.about-full-banner .z-2 {
+  position: relative;
+  z-index: 2;
+}

@@ -1,0 +1,75 @@
+/* .appointment-section {
+  background-image: url('/public/banner-background.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 500px;
+  position: relative;
+  z-index: 1;
+} */
+
+/* .appointment-section {
+  background-image: url('/public/banner-background.png');
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  min-height: 500px;
+  position: relative;
+  z-index: 1;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.appointment-section::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: -1;
+} */
+
+
+
+
+
+
+/* .appointment-banner {
+  position: relative;
+  background-image: url('/public/banner-background.png');
+  background-size: cover;
+  background-position: center center;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
+  z-index: 1;
+} */
+
+
+.appointment-section {
+  width: 100vw;
+  min-height: 600px;
+  background-image: url('/public/banner-background.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+
+.content-box {
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}

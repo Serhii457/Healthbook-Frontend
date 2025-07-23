@@ -1,0 +1,22 @@
+.services-banner {
+  background: url('/images/about/mission.jpg') center/cover no-repeat;
+  height: 300px;
+  position: relative;
+}
+
+.service-section img {
+  max-height: 300px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.service-section h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.service-section p {
+  font-size: 1.1rem;
+  color: #555;
+}

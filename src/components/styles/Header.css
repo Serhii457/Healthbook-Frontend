@@ -1,0 +1,14 @@
+.menuHolder .logo img {
+  height: 55px;
+  width: auto;
+  display: block;
+}
+
+.logo img {
+  width: 60%;
+  height: auto;
+  display: block;
+}
+.btn-big-beauty {
+  text-decoration: none !important;
+}

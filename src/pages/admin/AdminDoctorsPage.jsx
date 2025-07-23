@@ -1,0 +1,267 @@
+import React, { useEffect, useState } from 'react';
+import api from '../../api/axiosConfig';
+
+const AdminDoctorsPage = () => {
+  const [doctors, setDoctors] = useState([]);
+  const [specializations, setSpecializations] = useState([]);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    username: '',
+    password: '',
+    specializationId: ''
+  });
+  const [editingId, setEditingId] = useState(null);
+
+  useEffect(() => {
+    fetchDoctors();
+    fetchSpecializations();
+  }, []);
+
+  const fetchDoctors = async () => {
+    try {
+      const res = await api.get('/doctors');
+      setDoctors(res.data);
+    } catch (err) {
+      console.error('Помилка завантаження лікарів:', err);
+    }
+  };
+
+  const fetchSpecializations = async () => {
+    try {
+      const res = await api.get('/specializations');
+      setSpecializations(res.data);
+    } catch (err) {
+      console.error('Помилка завантаження спеціалізацій:', err);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Функція реєстрації користувача-лікаря
+  const registerDoctorUser = async (username, password) => {
+    try {
+      await api.post('/registerDoctor', null, { params: { username, password } });
+      return true;
+    } catch (err) {
+      alert('Помилка при реєстрації користувача-лікаря');
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.fullName || !formData.phone || !formData.specializationId) {
+      alert('Будь ласка, заповніть всі обов’язкові поля');
+      return;
+    }
+
+    const specializationId = parseInt(formData.specializationId, 10);
+    if (isNaN(specializationId)) {
+      alert('Оберіть коректну спеціалізацію');
+      return;
+    }
+
+    if (!editingId) {
+      if (!formData.username) {
+        alert('Будь ласка, введіть імʼя користувача');
+        return;
+      }
+      if (!formData.password) {
+        alert('Будь ласка, введіть пароль');
+        return;
+      }
+    }
+
+    try {
+      if (editingId) {
+        // PUT - обновляем доктора, API ожидает объект Doctor с объектом specialization
+        const updatedDoctor = {
+          fullName: formData.fullName,
+          phone: formData.phone,
+          specialization: { id: specializationId }
+        };
+        await api.put(`/doctors/${editingId}`, updatedDoctor);
+      } else {
+        // 1. Спочатку реєструємо користувача-лікаря
+        const registered = await registerDoctorUser(formData.username, formData.password);
+        if (!registered) return;
+
+        // 2. Потім створюємо доктора з посиланням на username
+        const newDoctor = {
+          fullName: formData.fullName,
+          phone: formData.phone,
+          username: formData.username,
+          specializationId
+        };
+        await api.post('/doctors', newDoctor);
+      }
+      fetchDoctors();
+      resetForm();
+    } catch (err) {
+      console.error('Помилка при збереженні лікаря:', err);
+      alert('Помилка при збереженні лікаря');
+    }
+  };
+
+  const handleEdit = (doc) => {
+    setFormData({
+      fullName: doc.fullName || '',
+      phone: doc.phone || '',
+      username: doc.username || '',
+      password: '',
+      specializationId: doc.specialization?.id ? String(doc.specialization.id) : ''
+    });
+    setEditingId(doc.id);
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Видалити лікаря?')) return;
+    try {
+      await api.delete(`/doctors/${id}`);
+      fetchDoctors();
+      if (editingId === id) resetForm();
+    } catch (err) {
+      console.error('Помилка при видаленні лікаря:', err);
+      alert('Помилка при видаленні');
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      fullName: '',
+      phone: '',
+      username: '',
+      password: '',
+      specializationId: ''
+    });
+    setEditingId(null);
+  };
+
+  return (
+    <div className="container py-5">
+      <h2 className="mb-4">Керування лікарями</h2>
+
+      <form onSubmit={handleSubmit} className="row row-cols-1 row-cols-md-6 g-3 mb-4">
+        <div className="col col-md-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Ім'я і прізвище"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="col col-md-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Телефон"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="col col-md-2">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Імʼя користувача"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required={!editingId}
+            disabled={!!editingId}
+          />
+        </div>
+
+        <div className="col col-md-2">
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Пароль"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required={!editingId}
+          />
+        </div>
+
+        <div className="col col-md-2">
+          <select
+            className="form-select"
+            name="specializationId"
+            value={formData.specializationId || ""}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Оберіть спеціалізацію</option>
+            {specializations.map(spec => (
+              <option key={spec.id} value={spec.id}>
+                {spec.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="col col-md-1 d-flex align-items-center">
+          <button className="btn btn-success w-100" type="submit">
+            {editingId ? 'Оновити' : 'Додати'}
+          </button>
+        </div>
+      </form>
+
+      <div className="table-responsive">
+        <table className="table table-bordered align-middle">
+          <thead className="table-light">
+            <tr>
+              <th>ПІБ</th>
+              <th>Телефон</th>
+              <th>Спеціалізація</th>
+              <th>Дії</th>
+            </tr>
+          </thead>
+          <tbody>
+            {doctors.map(doc => {
+              return (
+                <tr key={doc.id}>
+                  <td>{doc.fullName}</td>
+                  <td>{doc.phone}</td>
+                  <td>{doc.specialization || '—'}</td>
+                  <td>
+                    <button
+                      className="btn btn-sm btn-primary me-2"
+                      onClick={() => handleEdit(doc)}
+                    >
+                      Редагувати
+                    </button>
+                    <button
+                      className="btn btn-sm btn-danger"
+                      onClick={() => handleDelete(doc.id)}
+                    >
+                      Видалити
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default AdminDoctorsPage;

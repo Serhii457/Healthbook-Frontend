@@ -1,0 +1,8 @@
+.prices-page h1 {
+  font-size: 2.5rem;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}

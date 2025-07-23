@@ -1,0 +1,7 @@
+.review-card {
+  transition: transform 0.3s ease;
+}
+.review-card:hover {
+  transform: translateY(-5px);
+  background-color: #f8f9fa;
+}

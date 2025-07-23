@@ -1,0 +1,19 @@
+.btFooterWrap p {
+  text-align: justify;
+}
+
+.btFooterWrap .btn-link {
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.btFooterWrap .btn-link:hover {
+  text-decoration: underline;
+  color: #ccc;
+}
+
+.footer-service {
+  cursor: pointer;
+  margin-bottom: 8px;
+}
