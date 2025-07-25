@@ -44,7 +44,7 @@ const AppointmentPage = () => {
     handleChange(e);
     setFormData(prev => ({
       ...prev,
-      time: '' // сбрасываем время при смене даты
+      time: ''
     }));
   };
 
@@ -53,13 +53,7 @@ const AppointmentPage = () => {
     setError('');
 
     try {
-      await api.post('/appointments', {
-        doctorId: formData.doctorId,
-        date: formData.date,
-        time: formData.time,
-        patientId: 1,
-        status: 'SCHEDULED'
-      });
+      await api.post('/appointments/public', formData);
 
       setSuccess(true);
       setTimeout(() => setSuccess(false), 2000);

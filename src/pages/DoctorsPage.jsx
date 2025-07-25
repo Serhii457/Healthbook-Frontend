@@ -90,7 +90,7 @@ const DoctorsPage = () => {
     }
 
     try {
-      await api.post('/appointments', formData);
+      await api.post('/appointments/public', formData);
       setSuccess(true);
       setFormData({
         fullName: '',
