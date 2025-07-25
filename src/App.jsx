@@ -49,7 +49,7 @@ function App() {
         <Route path="/admin/requests" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminRequestsPage /></ProtectedRoute>} />
         <Route path="/admin/doctors" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminDoctorsPage /></ProtectedRoute>} />
         <Route path="/admin/specializations" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminSpecializationsPage /></ProtectedRoute>}/>
-        <Route path="/admin/patients" element={<AdminPatientsPage />} />
+        <Route path="/admin/patients" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminPatientsPage /></ProtectedRoute>} />
         <Route path="/admin/records" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminMedicalRecordsPage /></ProtectedRoute>}/>
         <Route path="/records" element={<ProtectedRoute allowedRoles={['PATIENT']}><PatientMedicalRecordsPage /></ProtectedRoute>}/>
         <Route path="/doctor/medical-records" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorMedicalRecordsPage /></ProtectedRoute>} />

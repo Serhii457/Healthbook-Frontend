@@ -1,171 +1,326 @@
+// // import React, { useEffect, useState } from 'react';
+// // import api from '../../api/axiosConfig';
+
+// // const AdminPatientsPage = () => {
+// //   const [requests, setRequests] = useState([]);
+
+// //   useEffect(() => {
+// //     api.get('/appointment-requests')
+// //       .then(res => setRequests(res.data))
+// //       .catch(err => {
+// //         console.error('Помилка при завантаженні заявок:', err);
+// //         alert('Не вдалося завантажити дані');
+// //       });
+// //   }, []);
+
+// //   return (
+// //     <div className="container py-5">
+// //       <h2 className="mb-4">Заявки на прийом</h2>
+// //       <table className="table table-bordered">
+// //         <thead className="table-light">
+// //           <tr>
+// //             <th>ПІБ</th>
+// //             <th>Телефон</th>
+// //           </tr>
+// //         </thead>
+// //         <tbody>
+// //           {requests.map((r, idx) => (
+// //             <tr key={r.id}>
+// //               <td>{r.fullName}</td>
+// //               <td>{r.phone}</td>
+// //             </tr>
+// //           ))}
+// //         </tbody>
+// //       </table>
+// //     </div>
+// //   );
+// // };
+
+// // export default AdminPatientsPage;
+
+
+
+// //add button delete
+// // import React, { useEffect, useState } from 'react';
+// // import api from '../../api/axiosConfig';
+
+// // const AdminPatientsPage = () => {
+// //   const [requests, setRequests] = useState([]);
+
+// //   useEffect(() => {
+// //     fetchRequests();
+// //   }, []);
+
+// //   const fetchRequests = async () => {
+// //     try {
+// //       const res = await api.get('/appointment-requests');
+// //       setRequests(res.data);
+// //     } catch (error) {
+// //       console.error('Помилка при завантаженні заявок:', error);
+// //     }
+// //   };
+
+// //   const handleDelete = async (id) => {
+// //     if (!window.confirm('Ви впевнені, що хочете видалити цю заявку?')) return;
+// //     try {
+// //       await api.delete(`/appointment-requests/${id}`);
+// //       setRequests(prev => prev.filter(r => r.id !== id));
+// //     } catch (error) {
+// //       console.error('Помилка при видаленні заявки:', error);
+// //     }
+// //   };
+
+// //   return (
+// //     <div className="container py-5">
+// //       <h2 className="text-center mb-4">Пацієнти, які записались на прийом</h2>
+
+// //       <table className="table table-bordered table-hover">
+// //         <thead className="table-light">
+// //           <tr>
+// //             <th>ПІБ</th>
+// //             <th>Телефон</th>
+// //             <th>Лікар</th>
+// //             <th>Дата</th>
+// //             <th>Час</th>
+// //             <th>Коментар</th>
+// //             <th>Статус</th>
+// //             <th>Дії</th>
+// //           </tr>
+// //         </thead>
+// //         <tbody>
+// //           {requests.length === 0 ? (
+// //             <tr>
+// //               <td colSpan="8" className="text-center">Немає заявок</td>
+// //             </tr>
+// //           ) : (
+// //             requests.map(req => (
+// //               <tr key={req.id}>
+// //                 <td>{req.fullName}</td>
+// //                 <td>{req.phone}</td>
+// //                 <td>{req.doctor?.fullName || '—'}</td>
+// //                 <td>{req.date || '—'}</td>
+// //                 <td>{req.time || '—'}</td>
+// //                 <td>{req.note || '—'}</td>
+// //                 <td>{req.status}</td>
+// //                 <td>
+// //                   <button
+// //                     className="btn btn-sm btn-danger"
+// //                     onClick={() => handleDelete(req.id)}
+// //                   >
+// //                     Видалити
+// //                   </button>
+// //                 </td>
+// //               </tr>
+// //             ))
+// //           )}
+// //         </tbody>
+// //       </table>
+// //     </div>
+// //   );
+// // };
+
+// // export default AdminPatientsPage;
+
+
+// //add sort
+
+// import React, { useEffect, useState } from 'react';
+// import api from '../../api/axiosConfig';
+
+// const AdminPatientsPage = () => {
+//   const [requests, setRequests] = useState([]);
+//   const [sortOrder, setSortOrder] = useState('asc');
+
+//   useEffect(() => {
+//     fetchRequests();
+//   }, []);
+
+//   const fetchRequests = async () => {
+//     try {
+//       const res = await api.get('/appointment-requests');
+//       setRequests(res.data);
+//     } catch (error) {
+//       console.error('Помилка при завантаженні заявок:', error);
+//     }
+//   };
+
+//   const handleDelete = async (id) => {
+//     if (!window.confirm('Ви впевнені, що хочете видалити цю заявку?')) return;
+//     try {
+//       await api.delete(`/appointment-requests/${id}`);
+//       setRequests(prev => prev.filter(r => r.id !== id));
+//     } catch (error) {
+//       console.error('Помилка при видаленні заявки:', error);
+//     }
+//   };
+
+//   const handleSortByDate = () => {
+//     const sorted = [...requests].sort((a, b) => {
+//       const dateA = a.date || '';
+//       const dateB = b.date || '';
+//       if (sortOrder === 'asc') {
+//         return dateA.localeCompare(dateB);
+//       } else {
+//         return dateB.localeCompare(dateA);
+//       }
+//     });
+//     setRequests(sorted);
+//     setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'));
+//   };
+
+//   return (
+//     <div className="container py-5">
+//       <h2 className="text-center mb-4">Пацієнти, які записались на прийом</h2>
+
+//       <div className="text-end mb-3">
+//         <button className="btn btn-outline-secondary" onClick={handleSortByDate}>
+//           Сортувати за датою {sortOrder === 'asc' ? '↑' : '↓'}
+//         </button>
+//       </div>
+
+//       <table className="table table-bordered table-hover">
+//         <thead className="table-light">
+//           <tr>
+//             <th>ПІБ</th>
+//             <th>Телефон</th>
+//             <th>Лікар</th>
+//             <th>Дата</th>
+//             <th>Час</th>
+//             <th>Коментар</th>
+//             <th>Статус</th>
+//             <th>Дії</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {requests.length === 0 ? (
+//             <tr>
+//               <td colSpan="8" className="text-center">Немає заявок</td>
+//             </tr>
+//           ) : (
+//             requests.map(req => (
+//               <tr key={req.id}>
+//                 <td>{req.fullName}</td>
+//                 <td>{req.phone}</td>
+//                 <td>{req.doctor?.fullName || '—'}</td>
+//                 <td>{req.date || '—'}</td>
+//                 <td>{req.time || '—'}</td>
+//                 <td>{req.note || '—'}</td>
+//                 <td>{req.status}</td>
+//                 <td>
+//                   <button
+//                     className="btn btn-sm btn-danger"
+//                     onClick={() => handleDelete(req.id)}
+//                   >
+//                     Видалити
+//                   </button>
+//                 </td>
+//               </tr>
+//             ))
+//           )}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
+
+// export default AdminPatientsPage;
+
+//add sort data time
+
 import React, { useEffect, useState } from 'react';
 import api from '../../api/axiosConfig';
 
 const AdminPatientsPage = () => {
-  const [patients, setPatients] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [formData, setFormData] = useState({
-    fullName: '',
-    phone: '',
-    userId: ''
-  });
-  const [editingId, setEditingId] = useState(null);
+  const [requests, setRequests] = useState([]);
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
-    fetchPatients();
+    fetchRequests();
   }, []);
 
-  const fetchPatients = async () => {
+  const fetchRequests = async () => {
     try {
-      const res = await api.get('/patients');
-      setPatients(res.data);
-    } catch (err) {
-      console.error(err);
-      alert('Помилка при завантаженні пацієнтів');
+      const res = await api.get('/appointment-requests');
+      setRequests(res.data);
+    } catch (error) {
+      console.error('Помилка при завантаженні заявок:', error);
     }
-  };
-  
-  const resetForm = () => {
-    setFormData({ fullName: '', phone: '', userId: '' });
-    setEditingId(null);
-  };
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const payload = {
-        fullName: formData.fullName,
-        phone: formData.phone,
-        user: { id: formData.userId }
-      };
-
-      if (editingId) {
-        await api.put(`/patients/${editingId}`, payload);
-      } else {
-        await api.post('/patients', payload);
-      }
-      resetForm();
-      fetchPatients();
-    } catch (err) {
-      console.error(err);
-      alert('Помилка при збереженні пацієнта');
-    }
-  };
-
-  const handleEdit = (patient) => {
-    setFormData({
-      fullName: patient.fullName,
-      phone: patient.phone,
-      userId: patient.user?.id || ''
-    });
-    setEditingId(patient.id);
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Видалити пацієнта?')) return;
+    if (!window.confirm('Ви впевнені, що хочете видалити цю заявку?')) return;
     try {
-      await api.delete(`/patients/${id}`);
-      fetchPatients();
-    } catch (err) {
-      console.error(err);
-      alert('Помилка при видаленні пацієнта');
+      await api.delete(`/appointment-requests/${id}`);
+      setRequests(prev => prev.filter(r => r.id !== id));
+    } catch (error) {
+      console.error('Помилка при видаленні заявки:', error);
     }
+  };
+
+  const handleSortByDate = () => {
+    const sorted = [...requests].sort((a, b) => {
+      const dateTimeA = new Date(`${a.date || ''}T${a.time || '00:00'}`);
+      const dateTimeB = new Date(`${b.date || ''}T${b.time || '00:00'}`);
+      return sortOrder === 'asc' ? dateTimeA - dateTimeB : dateTimeB - dateTimeA;
+    });
+    setRequests(sorted);
+    setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'));
   };
 
   return (
     <div className="container py-5">
-      <h2 className="mb-4">Керування пацієнтами</h2>
+      <h2 className="text-center mb-4">Пацієнти, які записались на прийом</h2>
 
-      <form onSubmit={handleSubmit} className="row g-3 mb-4">
-        <div className="col-md-4">
-          <input
-            type="text"
-            className="form-control"
-            name="fullName"
-            placeholder="Ім'я і прізвище"
-            value={formData.fullName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-3">
-          <input
-            type="text"
-            className="form-control"
-            name="phone"
-            placeholder="Телефон"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-3">
-          <select
-            className="form-select"
-            name="userId"
-            value={formData.userId}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Оберіть користувача</option>
-            {users.map(user => (
-              <option key={user.username || user.id} value={user.id}>
-                {user.username || `User #${user.id}`}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-md-2">
-          <button className="btn btn-success w-100" type="submit">
-            {editingId ? 'Оновити' : 'Додати'}
-          </button>
-        </div>
-      </form>
+      <div className="text-end mb-3">
+        <button className="btn btn-outline-secondary" onClick={handleSortByDate}>
+          Сортувати за датою і часом {sortOrder === 'asc' ? '↑' : '↓'}
+        </button>
+      </div>
 
-      <div className="table-responsive">
-        <table className="table table-bordered align-middle">
-          <thead className="table-light">
+      <table className="table table-bordered table-hover">
+        <thead className="table-light">
+          <tr>
+            <th>ПІБ</th>
+            <th>Телефон</th>
+            <th>Лікар</th>
+            <th>Дата</th>
+            <th>Час</th>
+            <th>Коментар</th>
+            <th>Статус</th>
+            <th>Дії</th>
+          </tr>
+        </thead>
+        <tbody>
+          {requests.length === 0 ? (
             <tr>
-              <th>Ім'я і прізвище</th>
-              <th>Телефон</th>
-              <th>ID Користувача</th>
-              <th>Дії</th>
+              <td colSpan="8" className="text-center">Немає заявок</td>
             </tr>
-          </thead>
-          <tbody>
-            {patients.map((p) => (
-              <tr key={p.id}>
-                <td>{p.fullName}</td>
-                <td>{p.phone}</td>
-                <td>{p.userId || '—'}</td>
+          ) : (
+            requests.map(req => (
+              <tr key={req.id}>
+                <td>{req.fullName}</td>
+                <td>{req.phone}</td>
+                <td>{req.doctor?.fullName || req.doctorName || '—'}</td>
+                <td>{req.date || '—'}</td>
+                <td>{req.time || '—'}</td>
+                <td>{req.note || '—'}</td>
+                <td>{req.status}</td>
                 <td>
                   <button
-                    className="btn btn-sm btn-primary me-2"
-                    onClick={() => handleEdit(p)}
-                  >
-                    Редагувати
-                  </button>
-                  <button
                     className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(p.id)}
+                    onClick={() => handleDelete(req.id)}
                   >
                     Видалити
                   </button>
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            ))
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
 
 export default AdminPatientsPage;
+
