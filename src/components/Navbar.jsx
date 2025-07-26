@@ -57,12 +57,8 @@ const Navbar = () => {
           ))}
 
           {role === 'ADMIN' && (
-            <>
-              <li className="nav-item"><NavLink to="/admin" className="nav-link px-3" onClick={handleNavLinkClick}>Адмін панель</NavLink></li>
-              {/* <li className="nav-item"><NavLink to="/admin/requests" className="nav-link px-3" onClick={handleNavLinkClick}>Заявки</NavLink></li>
-              <li className="nav-item"><NavLink to="/admin/records" className="nav-link px-3" onClick={handleNavLinkClick}>Медичні записи</NavLink></li> */}
-            </>
-          )}
+            <li className="nav-item"><NavLink to="/admin" className="nav-link px-3" onClick={handleNavLinkClick}>Адмін панель</NavLink></li>
+            )}
 
           {role === 'DOCTOR' && (
             <>

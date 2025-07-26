@@ -8,7 +8,6 @@ const AdminDashboardPage = () => {
     { title: 'Лікарі', path: '/admin/doctors', color: 'primary' },
     { title: 'Спеціалізації', path: '/admin/specializations', color: 'info' },
     { title: 'Пацієнти', path: '/admin/patients', color: 'success' },
-    { title: 'Заявки', path: '/admin/requests', color: 'warning' },
     { title: 'Медичні записи', path: '/admin/records', color: 'danger' },
   ];
 
@@ -17,7 +16,7 @@ const AdminDashboardPage = () => {
       <h1 className="mb-4 text-center">Адмін-панель</h1>
       <div className="row g-4">
         {sections.map((section, idx) => (
-          <div className="col-md-4" key={idx}>
+          <div className="col-12 col-md-6" key={idx}>
             <div
               className={`card border-${section.color} shadow h-100`}
               style={{ cursor: 'pointer' }}

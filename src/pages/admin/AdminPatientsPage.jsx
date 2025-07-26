@@ -3,16 +3,20 @@ import api from '../../api/axiosConfig';
 
 const AdminPatientsPage = () => {
   const [requests, setRequests] = useState([]);
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortDirection, setSortDirection] = useState('asc');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const pageSize = 10;
 
   useEffect(() => {
-    fetchRequests();
-  }, []);
+    fetchRequests(currentPage);
+  }, [currentPage]);
 
-  const fetchRequests = async () => {
+  const fetchRequests = async (page) => {
     try {
-      const res = await api.get('/appointment-requests');
-      setRequests(res.data);
+      const res = await api.get(`/appointment-requests/page?page=${page}&size=${pageSize}`);
+      setRequests(res.data.content);
+      setTotalPages(res.data.totalPages);
     } catch (error) {
       console.error('Помилка при завантаженні заявок:', error);
     }
@@ -22,7 +26,7 @@ const AdminPatientsPage = () => {
     if (!window.confirm('Ви впевнені, що хочете видалити цю заявку?')) return;
     try {
       await api.delete(`/appointment-requests/${id}`);
-      setRequests(prev => prev.filter(r => r.id !== id));
+      fetchRequests(currentPage);
     } catch (error) {
       console.error('Помилка при видаленні заявки:', error);
     }
@@ -32,10 +36,10 @@ const AdminPatientsPage = () => {
     const sorted = [...requests].sort((a, b) => {
       const dateTimeA = new Date(`${a.date || ''}T${a.time || '00:00'}`);
       const dateTimeB = new Date(`${b.date || ''}T${b.time || '00:00'}`);
-      return sortOrder === 'asc' ? dateTimeA - dateTimeB : dateTimeB - dateTimeA;
+      return sortDirection === 'asc' ? dateTimeA - dateTimeB : dateTimeB - dateTimeA;
     });
     setRequests(sorted);
-    setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'));
+    setSortDirection(prev => (prev === 'asc' ? 'desc' : 'asc'));
   };
 
   return (
@@ -44,7 +48,7 @@ const AdminPatientsPage = () => {
 
       <div className="text-end mb-3">
         <button className="btn btn-outline-secondary" onClick={handleSortByDate}>
-          Сортувати за датою і часом {sortOrder === 'asc' ? '↑' : '↓'}
+          Сортувати за датою і часом {sortDirection === 'asc' ? '↑' : '↓'}
         </button>
       </div>
 
@@ -75,7 +79,7 @@ const AdminPatientsPage = () => {
                 <td>{req.date || '—'}</td>
                 <td>{req.time || '—'}</td>
                 <td>{req.note || '—'}</td>
-                <td>{req.status}</td>
+                <td>{req.status || '—'}</td>
                 <td>
                   <button
                     className="btn btn-sm btn-danger"
@@ -89,6 +93,25 @@ const AdminPatientsPage = () => {
           )}
         </tbody>
       </table>
+
+      {totalPages > 1 && (
+        <div className="d-flex justify-content-center mt-4">
+          <nav>
+            <ul className="pagination">
+              {[...Array(totalPages)].map((_, idx) => (
+                <li
+                  key={idx}
+                  className={`page-item ${currentPage === idx ? 'active' : ''}`}
+                >
+                  <button className="page-link" onClick={() => setCurrentPage(idx)}>
+                    {idx + 1}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      )}
     </div>
   );
 };

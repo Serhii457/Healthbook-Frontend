@@ -10,7 +10,6 @@ import ServicesPage from './pages/ServicesPage.jsx';
 import DoctorsPage from './pages/DoctorsPage';
 import PricesPage from './pages/PricesPage.jsx';
 import ContactsPage from './pages/ContactsPage.jsx';
-import AdminRequestsPage from './pages/admin/AdminRequestsPage';
 import AppointmentPage from './pages/AppointmentPage.jsx';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
@@ -46,7 +45,6 @@ function App() {
         <Route path="/prices" element={<PricesPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
         <Route path="/admin" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminDashboardPage /></ProtectedRoute>} />
-        <Route path="/admin/requests" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminRequestsPage /></ProtectedRoute>} />
         <Route path="/admin/doctors" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminDoctorsPage /></ProtectedRoute>} />
         <Route path="/admin/specializations" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminSpecializationsPage /></ProtectedRoute>}/>
         <Route path="/admin/patients" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminPatientsPage /></ProtectedRoute>} />
