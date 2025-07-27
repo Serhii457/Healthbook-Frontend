@@ -3,18 +3,22 @@ import api from '../../api/axiosConfig';
 
 const AdminPatientsPage = () => {
   const [requests, setRequests] = useState([]);
-  const [sortDirection, setSortDirection] = useState('asc');
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const pageSize = 10;
+
+  const [sortField, setSortField] = useState('date');
+  const [sortDirection, setSortDirection] = useState('desc');
+  const pageSize = 8;
 
   useEffect(() => {
-    fetchRequests(currentPage);
-  }, [currentPage]);
+    fetchRequests(currentPage, sortField, sortDirection);
+  }, [currentPage, sortField, sortDirection]);
 
-  const fetchRequests = async (page) => {
+  const fetchRequests = async (page, field, direction) => {
     try {
-      const res = await api.get(`/appointment-requests/page?page=${page}&size=${pageSize}`);
+      const res = await api.get(
+        `/appointment-requests/page?page=${page}&size=${pageSize}&sort=${field},${direction}`
+      );
       setRequests(res.data.content);
       setTotalPages(res.data.totalPages);
     } catch (error) {
@@ -26,39 +30,48 @@ const AdminPatientsPage = () => {
     if (!window.confirm('Ви впевнені, що хочете видалити цю заявку?')) return;
     try {
       await api.delete(`/appointment-requests/${id}`);
-      fetchRequests(currentPage);
+      fetchRequests(currentPage, sortField, sortDirection);
     } catch (error) {
       console.error('Помилка при видаленні заявки:', error);
     }
   };
 
-  const handleSortByDate = () => {
-    const sorted = [...requests].sort((a, b) => {
-      const dateTimeA = new Date(`${a.date || ''}T${a.time || '00:00'}`);
-      const dateTimeB = new Date(`${b.date || ''}T${b.time || '00:00'}`);
-      return sortDirection === 'asc' ? dateTimeA - dateTimeB : dateTimeB - dateTimeA;
-    });
-    setRequests(sorted);
-    setSortDirection(prev => (prev === 'asc' ? 'desc' : 'asc'));
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortField(field);
+      setSortDirection(field === 'date' ? 'desc' : 'asc');
+    }
+    setCurrentPage(0);
+  };
+
+  const renderSortArrow = (field) => {
+    if (sortField !== field) return null;
+    return sortDirection === 'asc' ? ' ↑' : ' ↓';
   };
 
   return (
     <div className="container py-5">
       <h2 className="text-center mb-4">Пацієнти, які записались на прийом</h2>
 
-      <div className="text-end mb-3">
-        <button className="btn btn-outline-secondary" onClick={handleSortByDate}>
-          Сортувати за датою і часом {sortDirection === 'asc' ? '↑' : '↓'}
-        </button>
-      </div>
-
       <table className="table table-bordered table-hover">
         <thead className="table-light">
           <tr>
-            <th>ПІБ</th>
+            <th
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleSort('fullName')}
+            >
+              ПІБ{renderSortArrow('fullName')}
+            </th>
             <th>Телефон</th>
             <th>Лікар</th>
-            <th>Дата</th>
+            <th
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleSort('date')}
+            >
+              Дата{renderSortArrow('date')}
+            </th>
             <th>Час</th>
             <th>Коментар</th>
             <th>Статус</th>
@@ -71,7 +84,7 @@ const AdminPatientsPage = () => {
               <td colSpan="8" className="text-center">Немає заявок</td>
             </tr>
           ) : (
-            requests.map(req => (
+            requests.map((req) => (
               <tr key={req.id}>
                 <td>{req.fullName}</td>
                 <td>{req.phone}</td>
