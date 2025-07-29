@@ -62,19 +62,10 @@ const Navbar = () => {
 
           {role === 'DOCTOR' && (
             <>
-              <li className="nav-item"><NavLink to="/doctor/profile" className="nav-link px-3" onClick={handleNavLinkClick}>Профіль</NavLink></li>
-              <li className="nav-item"><NavLink to="/schedule" className="nav-link px-3" onClick={handleNavLinkClick}>Мій розклад</NavLink></li>
-              <li className="nav-item"><NavLink to="/doctor/medical-records" className="nav-link px-3" onClick={handleNavLinkClick}>Медичні записи</NavLink></li>
+              <li className="nav-item"><NavLink to="/doctor" className="nav-link px-3" onClick={handleNavLinkClick}>Доктор панель</NavLink></li>
             </>
           )}
 
-          {role === 'PATIENT' && (
-            <>
-              <li className="nav-item"><NavLink to="/records" className="nav-link px-3" onClick={handleNavLinkClick}>Мої записи</NavLink></li>
-              <li className="nav-item"><NavLink to="/my-appointments" className="nav-link px-3" onClick={handleNavLinkClick}>Мої прийоми</NavLink></li>
-              <li className="nav-item"><NavLink to="/my-profile" className="nav-link px-3" onClick={handleNavLinkClick}>Мій профіль</NavLink></li>
-            </>
-          )}
         </ul>
 
         <ul className="navbar-nav ms-auto align-items-center">

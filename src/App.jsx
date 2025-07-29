@@ -17,11 +17,9 @@ import AdminDoctorsPage from './pages/admin/AdminDoctorsPage';
 import AdminSpecializationsPage from './pages/admin/AdminSpecializationsPage.jsx';
 import AdminPatientsPage from './pages/admin/AdminPatientsPage.jsx';
 import AdminMedicalRecordsPage from './pages/admin/AdminMedicalRecordsPage.jsx';
-import PatientMedicalRecordsPage from './pages/patient/PatientMedicalRecordsPage.jsx';
+import DoctorDashboardPage from './pages/doctor/DoctorDashboardPage.jsx';
+import DoctorPatientsPage from './pages/doctor/DoctorPatientsPage.jsx';
 import DoctorMedicalRecordsPage from './pages/doctor/DoctorMedicalRecordsPage.jsx';
-import DoctorProfilePage from './pages/doctor/DoctorProfilePage.jsx';
-import PatientAppointmentsPage from './pages/patient/PatientAppointmentsPage.jsx';
-import PatientProfilePage from './pages/patient/PatientProfilePage.jsx';
 import NotFoundPage from './pages/NotFoundPage';
 import AccessDeniedPage from './pages/AccessDeniedPage';
 import Footer from './components/Footer.jsx';
@@ -49,11 +47,9 @@ function App() {
         <Route path="/admin/specializations" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminSpecializationsPage /></ProtectedRoute>}/>
         <Route path="/admin/patients" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminPatientsPage /></ProtectedRoute>} />
         <Route path="/admin/records" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminMedicalRecordsPage /></ProtectedRoute>}/>
-        <Route path="/records" element={<ProtectedRoute allowedRoles={['PATIENT']}><PatientMedicalRecordsPage /></ProtectedRoute>}/>
-        <Route path="/doctor/medical-records" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorMedicalRecordsPage /></ProtectedRoute>} />
-        <Route path="/doctor/profile" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorProfilePage /></ProtectedRoute>}/>
-        <Route path="/my-appointments" element={<ProtectedRoute allowedRoles={['PATIENT']}><PatientAppointmentsPage /></ProtectedRoute>}/>
-        <Route path="/my-profile" element={<ProtectedRoute allowedRoles={['PATIENT']}><PatientProfilePage /></ProtectedRoute>}/>
+        <Route path="/doctor" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorDashboardPage /></ProtectedRoute>} />
+        <Route path="/doctor/patients" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorPatientsPage /></ProtectedRoute>} />
+        <Route path="/doctor/records" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorMedicalRecordsPage /></ProtectedRoute>}/>
         <Route path="/403" element={<AccessDeniedPage />} />
         <Route path="*" element={<NotFoundPage />} />
     </Routes>

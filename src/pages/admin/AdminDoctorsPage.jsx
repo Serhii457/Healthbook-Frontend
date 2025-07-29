@@ -24,7 +24,9 @@ const AdminDoctorsPage = () => {
 
   const fetchDoctors = async (page, order) => {
     try {
-      const res = await api.get(`/doctors/page?page=${page}&size=${pageSize}&sort=fullName,${order}`);
+      // const res = await api.get(`/doctors/page?page=${page}&size=${pageSize}&sort=fullName,${order}`);
+      const res = await api.get(`/doctors/page?page=${page}&size=${pageSize}&sort=user.fullName,${order}`);
+
       setDoctors(res.data.content);
       setTotalPages(res.data.totalPages);
     } catch (err) {
