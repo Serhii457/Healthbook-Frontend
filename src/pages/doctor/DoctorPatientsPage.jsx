@@ -1,14 +1,17 @@
+//работает доктор-пациент, переходит на записи и дальше все
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../api/axiosConfig';
 
 const DoctorPatientsPage = () => {
   const [requests, setRequests] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
   const [sortField, setSortField] = useState('date');
   const [sortDirection, setSortDirection] = useState('desc');
   const pageSize = 8;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchRequests(currentPage, sortField, sortDirection);
@@ -25,6 +28,13 @@ const DoctorPatientsPage = () => {
       console.error('Помилка при завантаженні заявок:', error);
     }
   };
+
+const handleRowClick = (patientId, patientName) => {
+  navigate(`/doctor/medical-records/${patientId}`, {
+    state: { patientName }
+  });
+};
+
 
   const handleSort = (field) => {
     if (sortField === field) {
@@ -48,23 +58,18 @@ const DoctorPatientsPage = () => {
       <table className="table table-bordered table-hover">
         <thead className="table-light">
           <tr>
-            <th
-              style={{ cursor: 'pointer' }}
-              onClick={() => handleSort('fullName')}
-            >
+            <th onClick={() => handleSort('fullName')} style={{ cursor: 'pointer' }}>
               ПІБ{renderSortArrow('fullName')}
             </th>
             <th>Телефон</th>
             <th>Лікар</th>
-            <th
-              style={{ cursor: 'pointer' }}
-              onClick={() => handleSort('date')}
-            >
+            <th onClick={() => handleSort('date')} style={{ cursor: 'pointer' }}>
               Дата{renderSortArrow('date')}
             </th>
             <th>Час</th>
             <th>Коментар</th>
             <th>Статус</th>
+            <th>Дії</th>
           </tr>
         </thead>
         <tbody>
@@ -74,7 +79,11 @@ const DoctorPatientsPage = () => {
             </tr>
           ) : (
             requests.map((req) => (
-              <tr key={req.id}>
+              <tr
+                key={req.id}
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleRowClick(req.patient?.id, req.patient?.fullName)}
+              >
                 <td>{req.fullName}</td>
                 <td>{req.phone}</td>
                 <td>{req.doctor?.fullName || req.doctorName || '—'}</td>
@@ -82,6 +91,21 @@ const DoctorPatientsPage = () => {
                 <td>{req.time || '—'}</td>
                 <td>{req.note || '—'}</td>
                 <td>{req.status || '—'}</td>
+                <td>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={(e) => {
+                      e.stopPropagation(); // не спрацьовує перехід при кліку на кнопку
+                      if (window.confirm('Ви впевнені, що хочете видалити цю заявку?')) {
+                        api.delete(`/appointment-requests/${req.id}`).then(() => {
+                          fetchRequests(currentPage, sortField, sortDirection);
+                        });
+                      }
+                    }}
+                  >
+                    Видалити
+                  </button>
+                </td>
               </tr>
             ))
           )}
@@ -93,10 +117,7 @@ const DoctorPatientsPage = () => {
           <nav>
             <ul className="pagination">
               {[...Array(totalPages)].map((_, idx) => (
-                <li
-                  key={idx}
-                  className={`page-item ${currentPage === idx ? 'active' : ''}`}
-                >
+                <li key={idx} className={`page-item ${currentPage === idx ? 'active' : ''}`}>
                   <button className="page-link" onClick={() => setCurrentPage(idx)}>
                     {idx + 1}
                   </button>

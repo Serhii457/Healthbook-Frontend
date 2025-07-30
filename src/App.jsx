@@ -49,7 +49,8 @@ function App() {
         <Route path="/admin/records" element={<ProtectedRoute allowedRoles={['ADMIN']}><AdminMedicalRecordsPage /></ProtectedRoute>}/>
         <Route path="/doctor" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorDashboardPage /></ProtectedRoute>} />
         <Route path="/doctor/patients" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorPatientsPage /></ProtectedRoute>} />
-        <Route path="/doctor/records" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorMedicalRecordsPage /></ProtectedRoute>}/>
+        <Route path="/doctor/medical-records/:patientId" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorMedicalRecordsPage /></ProtectedRoute>}/>
+
         <Route path="/403" element={<AccessDeniedPage />} />
         <Route path="*" element={<NotFoundPage />} />
     </Routes>
