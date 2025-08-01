@@ -1,4 +1,3 @@
-//работает доктор-пациент, переходит на записи и дальше все
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/axiosConfig';
@@ -82,7 +81,7 @@ const handleRowClick = (patientId, patientName) => {
               <tr
                 key={req.id}
                 style={{ cursor: 'pointer' }}
-                onClick={() => handleRowClick(req.patient?.id, req.patient?.fullName)}
+                onClick={() => handleRowClick(req.patientId, req.fullName)}
               >
                 <td>{req.fullName}</td>
                 <td>{req.phone}</td>
@@ -95,7 +94,7 @@ const handleRowClick = (patientId, patientName) => {
                   <button
                     className="btn btn-sm btn-danger"
                     onClick={(e) => {
-                      e.stopPropagation(); // не спрацьовує перехід при кліку на кнопку
+                      e.stopPropagation();
                       if (window.confirm('Ви впевнені, що хочете видалити цю заявку?')) {
                         api.delete(`/appointment-requests/${req.id}`).then(() => {
                           fetchRequests(currentPage, sortField, sortDirection);

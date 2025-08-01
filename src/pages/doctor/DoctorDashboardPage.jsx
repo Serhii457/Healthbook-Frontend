@@ -6,7 +6,7 @@ const DoctorDashboardPage = () => {
 
   const sections = [
     { title: 'Пацієнти', path: '/doctor/patients', color: 'success' },
-    { title: 'Медичні записи', path: '/doctor/records', color: 'danger' },
+    { title: 'Медичні записи', path: '/doctor/medical_records', color: 'danger' },
   ];
 
   return (
