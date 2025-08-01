@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api/axiosConfig';
+import '../styles/AdminSpecializationsPage.css';
 
 const AdminSpecializationsPage = () => {
   const [specializations, setSpecializations] = useState([]);
@@ -55,11 +56,15 @@ const AdminSpecializationsPage = () => {
   };
 
   return (
-    <div className="container py-5">
+    <div className="px-4 py-5" style={{ width: '100vw', maxWidth: '100vw' }}>
       <h1 className="mb-4">Керування спеціалізаціями</h1>
 
-      <form onSubmit={handleSubmit} className="row g-3 mb-4">
-        <div className="col-md-8">
+      <form
+        onSubmit={handleSubmit}
+        className="row g-3 mb-4"
+        style={{ maxWidth: '600px', width: '100%' }}
+      >
+        <div className="col-8">
           <input
             type="text"
             className="form-control"
@@ -69,45 +74,64 @@ const AdminSpecializationsPage = () => {
             required
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-4">
           <button className="btn btn-success w-100" type="submit">
             {editingId ? 'Оновити' : 'Додати'}
           </button>
         </div>
       </form>
 
-      <div className="table-responsive">
-        <table className="table table-bordered align-middle">
-          <thead className="table-light">
-            <tr>
-              <th>#</th>
-              <th>Назва</th>
-              <th>Дії</th>
-            </tr>
-          </thead>
-          <tbody>
-            {specializations.map((spec, idx) => (
-              <tr key={spec.id}>
-                <td>{idx + 1}</td>
-                <td>{spec.name}</td>
-                <td>
-                  <button
-                    className="btn btn-sm btn-primary me-2"
-                    onClick={() => handleEdit(spec)}
-                  >
-                    Редагувати
-                  </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(spec.id)}
-                  >
-                    Видалити
-                  </button>
-                </td>
+      <div className="d-flex flex-wrap" style={{ gap: '20px' }}>
+        <div
+          className="table-responsive flex-grow-1 table-container"
+        >
+          <table className="table table-bordered align-middle mb-0" style={{ width: '100%' }}>
+            <thead className="table-dark">
+              <tr>
+                <th style={{ width: '40px' }}>#</th>
+                <th>Назва</th>
+                <th style={{ width: '100px' }}>Дії</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {specializations.map((spec, idx) => (
+                <tr key={spec.id}>
+                  <td>{idx + 1}</td>
+                  <td>{spec.name}</td>
+                  <td>
+                    <div className="d-flex gap-2 justify-content-start">
+                      <button
+                        className="btn btn-sm btn-primary"
+                        onClick={() => handleEdit(spec)}
+                        style={{ flex: '1 1 auto', minWidth: '40px' }}
+                      >
+                        Редагувати
+                      </button>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => handleDelete(spec.id)}
+                        style={{ flex: '1 1 auto', minWidth: '40px' }}
+                      >
+                        Видалити
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          className="d-none d-md-block img-container"
+          style={{ flexShrink: 0, minWidth: '250px' }}
+        >
+          <img
+            src="../../../public/doctorPhoto.png"
+            alt="Ілюстрація"
+            style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+          />
+        </div>
       </div>
     </div>
   );

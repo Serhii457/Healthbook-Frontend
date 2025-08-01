@@ -7,7 +7,7 @@ const SpecializationPage = () => {
   useEffect(() => {
     api.get('/specializations')
       .then(response => setSpecializations(response.data))
-      .catch(error => console.error('Ошибка при получении специализаций:', error));
+      .catch(error => console.error('Помилка при отриманні спеціалізацій:', error));
   }, []);
 
   return (
@@ -17,7 +17,7 @@ const SpecializationPage = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Название</th>
+            <th>Назва</th>
           </tr>
         </thead>
         <tbody>

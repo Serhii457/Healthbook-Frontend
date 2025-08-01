@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/axiosConfig';
+import { Table, Button } from 'react-bootstrap';
 
 const DoctorPatientsPage = () => {
   const [requests, setRequests] = useState([]);
@@ -28,12 +29,11 @@ const DoctorPatientsPage = () => {
     }
   };
 
-const handleRowClick = (patientId, patientName) => {
+  const handleRowClick = (patientId, patientName) => {
   navigate(`/doctor/medical-records/${patientId}`, {
     state: { patientName }
   });
 };
-
 
   const handleSort = (field) => {
     if (sortField === field) {
@@ -53,9 +53,9 @@ const handleRowClick = (patientId, patientName) => {
   return (
     <div className="container py-5">
       <h2 className="text-center mb-4">Пацієнти, які записались на прийом</h2>
-
-      <table className="table table-bordered table-hover">
-        <thead className="table-light">
+      <div className="table-responsive">
+        <Table striped bordered hover className="align-middle text-center">
+        <thead className="table-dark">
           <tr>
             <th onClick={() => handleSort('fullName')} style={{ cursor: 'pointer' }}>
               ПІБ{renderSortArrow('fullName')}
@@ -109,7 +109,8 @@ const handleRowClick = (patientId, patientName) => {
             ))
           )}
         </tbody>
-      </table>
+        </Table>
+        </div>
 
       {totalPages > 1 && (
         <div className="d-flex justify-content-center mt-4">

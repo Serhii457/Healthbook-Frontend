@@ -8,7 +8,7 @@ const AdminDashboardPage = () => {
     { title: 'Лікарі', path: '/admin/doctors', color: 'primary' },
     { title: 'Спеціалізації', path: '/admin/specializations', color: 'info' },
     { title: 'Пацієнти', path: '/admin/patients', color: 'success' },
-    { title: 'Медичні записи', path: '/admin/records', color: 'danger' },
+    { title: 'Медичні записи', path: '/admin/all', color: 'danger' },
   ];
 
   return (

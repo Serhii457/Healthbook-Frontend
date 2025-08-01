@@ -7,7 +7,7 @@ const PatientsPage = () => {
   useEffect(() => {
     api.get('/patients')
       .then(response => setPatients(response.data))
-      .catch(error => console.error('Ошибка при получении пациентов:', error));
+      .catch(error => console.error('Помилка при отриманні паціентів:', error));
   }, []);
 
   return (
@@ -16,7 +16,7 @@ const PatientsPage = () => {
       <table className="table table-striped mt-3">
         <thead>
           <tr>
-            <th>ПІБ</th>
+            <th>Ім'я і прізвище</th>
             <th>Телефон</th>
             <th>Дата народження</th>
           </tr>

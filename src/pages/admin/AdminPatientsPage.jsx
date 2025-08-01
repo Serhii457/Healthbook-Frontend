@@ -5,7 +5,6 @@ const AdminPatientsPage = () => {
   const [requests, setRequests] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
   const [sortField, setSortField] = useState('date');
   const [sortDirection, setSortDirection] = useState('desc');
   const pageSize = 8;
@@ -56,7 +55,7 @@ const AdminPatientsPage = () => {
       <h2 className="text-center mb-4">Пацієнти, які записались на прийом</h2>
 
       <table className="table table-bordered table-hover">
-        <thead className="table-light">
+        <thead className="table-dark">
           <tr>
             <th
               style={{ cursor: 'pointer' }}

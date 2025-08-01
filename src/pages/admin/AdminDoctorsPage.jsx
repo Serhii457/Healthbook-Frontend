@@ -182,7 +182,7 @@ const AdminDoctorsPage = () => {
 
       <div className="table-responsive">
         <table className="table table-bordered align-middle">
-          <thead className="table-light">
+          <thead className="table-dark">
             <tr>
               <th style={{ cursor: 'pointer' }} onClick={handleSortByFullName}>
                 ПІБ {sortOrder === 'asc' ? '↑' : '↓'}

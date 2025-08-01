@@ -1,11 +1,11 @@
-const BASE_URL = 'http://localhost:8080'; // или твой backend URL
+const BASE_URL = 'http://localhost:8080';
 
 export async function login(username, password) {
   const response = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ username, password }),
-    credentials: 'include',  // важно: отправляем куки
+    credentials: 'include',
   });
   if (!response.ok) {
     throw new Error('Неверный логин или пароль');
@@ -29,7 +29,7 @@ export async function fetchCurrentUser() {
     credentials: 'include',
   });
   if (!response.ok) {
-    return null; // неавторизован
+    return null;
   }
-  return await response.json(); // {username, role}
+  return await response.json();
 }

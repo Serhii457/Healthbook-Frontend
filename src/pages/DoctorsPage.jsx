@@ -160,7 +160,7 @@ const DoctorsPage = () => {
 
           <form onSubmit={handleSubmit} className="row g-3">
             <div className="col-md-6">
-              <label className="form-label">ПІБ</label>
+              <label className="form-label">Ім'я і прізвище</label>
               <input
                 type="text"
                 className="form-control"

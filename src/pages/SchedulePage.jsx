@@ -7,19 +7,19 @@ const SchedulePage = () => {
   useEffect(() => {
     api.get('/schedules')
       .then(response => setSchedules(response.data))
-      .catch(error => console.error('Ошибка при получении расписаний:', error));
+      .catch(error => console.error('Помилка при отриманні розкладів:', error));
   }, []);
 
   return (
     <div className="container mt-4">
-      <h2>Расписания</h2>
+      <h2>Розклади</h2>
       <table className="table table-striped mt-3">
         <thead>
           <tr>
             <th>ID</th>
             <th>Дата</th>
-            <th>Время</th>
-            <th>Доктор</th>
+            <th>Час</th>
+            <th>Лікар</th>
           </tr>
         </thead>
         <tbody>
