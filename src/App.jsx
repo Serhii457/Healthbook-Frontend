@@ -20,6 +20,7 @@ import AdminMedicalRecordsPage from './pages/admin/AdminMedicalRecordsPage.jsx';
 import DoctorDashboardPage from './pages/doctor/DoctorDashboardPage.jsx';
 import DoctorPatientsPage from './pages/doctor/DoctorPatientsPage.jsx';
 import DoctorMedicalRecordsPage from './pages/doctor/DoctorMedicalRecordsPage.jsx';
+import DoctorAllRecordsPage from './pages/doctor/DoctorAllRecordsPage.jsx';
 import NotFoundPage from './pages/NotFoundPage';
 import AccessDeniedPage from './pages/AccessDeniedPage';
 import Footer from './components/Footer.jsx';
@@ -50,7 +51,7 @@ function App() {
         <Route path="/doctor" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorDashboardPage /></ProtectedRoute>} />
         <Route path="/doctor/patients" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorPatientsPage /></ProtectedRoute>} />
         <Route path="/doctor/medical-records/:patientId" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorMedicalRecordsPage /></ProtectedRoute>}/>
-
+        <Route path="/doctor/all-records" element={<ProtectedRoute allowedRoles={['DOCTOR']}><DoctorAllRecordsPage /></ProtectedRoute>} />
         <Route path="/403" element={<AccessDeniedPage />} />
         <Route path="*" element={<NotFoundPage />} />
     </Routes>
