@@ -14,7 +14,7 @@ const Header = () => {
 
           <div className="col-12 col-md-3 mb-2 mb-md-0 logo">
             <img
-              src="/public/logo_healthLife.png"
+              src="./public/logo_healthLife.png"
               alt="Логотип клініки"
               style={{ maxHeight: "55px" }}
             />

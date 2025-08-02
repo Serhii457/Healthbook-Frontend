@@ -127,7 +127,7 @@ const AdminSpecializationsPage = () => {
           style={{ flexShrink: 0, minWidth: '250px' }}
         >
           <img
-            src="../../../public/doctorPhoto.png"
+            src="/doctorPhoto.png"
             alt="Ілюстрація"
             style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
           />
