@@ -58,7 +58,7 @@ const DoctorPatientsPage = () => {
         <thead className="table-dark">
           <tr>
             <th onClick={() => handleSort('fullName')} style={{ cursor: 'pointer' }}>
-              ПІБ{renderSortArrow('fullName')}
+              Паціент{renderSortArrow('fullName')}
             </th>
             <th>Телефон</th>
             <th>Лікар</th>

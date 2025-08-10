@@ -61,7 +61,7 @@ const AdminPatientsPage = () => {
               style={{ cursor: 'pointer' }}
               onClick={() => handleSort('fullName')}
             >
-              ПІБ{renderSortArrow('fullName')}
+              Ім'я і прізвище{renderSortArrow('fullName')}
             </th>
             <th>Телефон</th>
             <th>Лікар</th>

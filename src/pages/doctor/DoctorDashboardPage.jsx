@@ -11,7 +11,7 @@ const DoctorDashboardPage = () => {
 
   return (
     <div className="container py-5">
-      <h1 className="mb-4 text-center">Адмін-панель</h1>
+      <h1 className="mb-4 text-center">Доктор-панель</h1>
       <div className="row g-4">
         {sections.map((section, idx) => (
           <div className="col-12 col-md-6" key={idx}>

@@ -1,7 +1,7 @@
 .appointment-section {
   width: 100vw;
   min-height: 600px;
-  background-image: url('/public/banner-background.png');
+  background-image: url('/banner-background.png');
   background-size: cover;
   background-position: center;
   display: flex;

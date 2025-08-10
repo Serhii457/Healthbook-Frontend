@@ -154,7 +154,7 @@ const AdminDoctorsPage = () => {
 
       <form onSubmit={handleSubmit} className="row g-3 mb-4">
         <div className="col-md-3">
-          <input type="text" className="form-control" placeholder="ПІБ" name="fullName" value={formData.fullName} onChange={handleChange} required />
+          <input type="text" className="form-control" placeholder="Ім'я і прізвище" name="fullName" value={formData.fullName} onChange={handleChange} required />
         </div>
         <div className="col-md-2">
           <input type="text" className="form-control" placeholder="Телефон" name="phone" value={formData.phone} onChange={handleChange} required />
@@ -185,7 +185,7 @@ const AdminDoctorsPage = () => {
           <thead className="table-dark">
             <tr>
               <th style={{ cursor: 'pointer' }} onClick={handleSortByFullName}>
-                ПІБ {sortOrder === 'asc' ? '↑' : '↓'}
+                Ім'я і прізвище {sortOrder === 'asc' ? '↑' : '↓'}
               </th>
               <th>Телефон</th>
               <th>Спеціалізація</th>

@@ -15,7 +15,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-4 mb-4 text-md-centre">
             <img
-              src="./public/logo_health_life.png"
+              src="./logo_health_life.png"
               alt="Логотип клініки"
               style={{ width: '80%' }}
             />
