@@ -1,19 +1,38 @@
 .btFooterWrap p {
   text-align: justify;
+  margin-bottom: 1rem;
 }
 
-.btFooterWrap .btn-link {
-  font-weight: 400;
-  text-decoration: none;
-  transition: color 0.2s;
+.ps-5 {
+  padding-left: 3rem !important;
 }
 
-.btFooterWrap .btn-link:hover {
-  text-decoration: underline;
-  color: #ccc;
+.ms-5 {
+  margin-left: 3rem !important;
 }
 
-.footer-service {
-  cursor: pointer;
-  margin-bottom: 8px;
+@media (min-width: 768px) {
+  .text-md-center {
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .footer-logo img {
+    width: 100% !important;
+    max-width: none !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .text-md-center {
+    text-align: left !important;
+  }
+
+  .ps-5,
+  .ms-5 {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
 }
